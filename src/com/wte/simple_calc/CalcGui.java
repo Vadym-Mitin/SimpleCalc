@@ -9,8 +9,8 @@ public class CalcGui extends JFrame {
 
 
     public CalcGui() {
-        CalcAlgo listener = new CalcAlgo();
-        ArrayList<CalcButton> numButtons = new ArrayList<>();
+        ButtonListener listener = new ButtonListener();
+        ArrayList<Button> numericalButtons = new ArrayList<>();
         Font f = new Font("Serif", Font.BOLD, 20);
         UIManager.put("Button.font", f);
         UIManager.put("TextField.font", f);
@@ -34,7 +34,7 @@ public class CalcGui extends JFrame {
         buttonPane.add(opButPane);
 
         addOpButton(opButPane, listener);
-        addNumButtons(numButtonsPane, numButtons, listener);
+        addNumButtons(numButtonsPane, numericalButtons, listener);
 
         JTextField textNum = new JTextField(20);
         listener.setTextField(textNum);
@@ -46,52 +46,52 @@ public class CalcGui extends JFrame {
 
     }
 
-    private void addOpButton(Container c, CalcAlgo a) {
+    private void addOpButton(Container c, ButtonListener a) {
 
-        CalcButton plusButton = new CalcButton("+");
+        Button plusButton = new Button("+");
         plusButton.setInd('+');
         plusButton.setSize(new Dimension(15, 15));
 
-        CalcButton minusButton = new CalcButton("-");
+        Button minusButton = new Button("-");
         minusButton.setInd('-');
         minusButton.setSize(new Dimension(15, 15));
 
-        CalcButton multiplyButton = new CalcButton("*");
+        Button multiplyButton = new Button("*");
         multiplyButton.setInd('*');
         multiplyButton.setSize(new Dimension(15, 15));
 
-        CalcButton divisionButton = new CalcButton("/");
+        Button divisionButton = new Button("/");
         divisionButton.setInd('/');
         divisionButton.setSize(new Dimension(15, 15));
 
-        CalcButton calcButton = new CalcButton("=");
-        calcButton.setInd('=');
-        calcButton.setSize(new Dimension(15, 15));
+        Button button = new Button("=");
+        button.setInd('=');
+        button.setSize(new Dimension(15, 15));
 
 
         plusButton.addActionListener(a);
         minusButton.addActionListener(a);
         multiplyButton.addActionListener(a);
         divisionButton.addActionListener(a);
-        calcButton.addActionListener(a);
+        button.addActionListener(a);
 
 
         c.add(plusButton);
         c.add(minusButton);
         c.add(multiplyButton);
         c.add(divisionButton);
-        c.add(calcButton);
+        c.add(button);
 
     }
 
 
-    private void addNumButtons(Container c, ArrayList a,CalcAlgo al) {
+    private void addNumButtons(Container c, ArrayList a, ButtonListener al) {
 
-        ArrayList<CalcButton> list = a;
+        ArrayList<Button> list = a;
         int count;
 
         for (int i = 0; i <10 ; i++) {
-            list.add(i, new CalcButton(Integer.toString(i)));
+            list.add(i, new Button(Integer.toString(i)));
             list.get(i).setVal(i);
             list.get(i).setInd('N');
             list.get(i).setSize(new Dimension(15, 15));

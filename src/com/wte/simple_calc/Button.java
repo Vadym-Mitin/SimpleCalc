@@ -3,11 +3,11 @@ package com.wte.simple_calc;
 import javax.swing.*;
 
 public
-class CalcButton extends JButton {
+class Button extends JButton {
     private int val;
     private char ind;
 
-    public CalcButton(String text) {
+    public Button(String text) {
         super(text);
     }
 
