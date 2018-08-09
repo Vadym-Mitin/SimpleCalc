@@ -5,17 +5,17 @@ import javax.swing.*;
 public
 class Button extends JButton {
     private int val;
-    private char ind;
+    private String ind;
 
     public Button(String text) {
         super(text);
     }
 
-    public void setInd(char ind) {
+    public void setInd(String ind) {
         this.ind = ind;
     }
 
-    public char getInd() {
+    public String getInd() {
         return ind;
     }
 
