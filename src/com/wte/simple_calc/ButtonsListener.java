@@ -5,40 +5,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static com.wte.simple_calc.Calculator.calculate;
+import static com.wte.simple_calc.Signs.*;
 
 public class ButtonsListener implements ActionListener {
 
-
-    private static final String PLUS = "+";
-    private static final String MINUS = "-";
-    private static final String MULTIPLICATION = "*";
-    private static final String DIVISION = "/";
-    private static final String EQUATION = "=";
-
-    private char equationSymbol;
+    private String equationSymbol;
     private char flag;
     private JTextField textNum;
     private static double firstVariable;
     private static double secondVariable;
-    private boolean counter = true;
+    private boolean counter = false;
     private boolean valCount = true;
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent event) {
 
-        String buttonSymbol = ((Button) e.getSource()).getInd();
+        String buttonSymbol = ((MyButton) event.getSource()).getIndicator();
+        
 
-        if (Signs.PLUS == buttonSymbol) {
-            calculate(PLUS);
-        } else if (MINUS.equals(buttonSymbol)) {
-            calculate(MINUS);
-        } else if (MULTIPLICATION.equals(buttonSymbol)) {
-            calculate(MULTIPLICATION);
-        } else if (DIVISION.equals(buttonSymbol)) {
-            calculate(DIVISION);
+        if (PLUS.getSign().equals(buttonSymbol)) {
+            calculate(PLUS.getSign());
+        } else if (MINUS.getSign().equals(buttonSymbol)) {
+            calculate(MINUS.getSign());
+        } else if (MULTIPLICATION.getSign().equals(buttonSymbol)) {
+            calculate(MULTIPLICATION.getSign());
+        } else if (DIVISION.getSign().equals(buttonSymbol)) {
+            calculate(DIVISION.getSign());
         }
 //         блок для кнопки равно
-        else if (EQUATION.equals(buttonSymbol)) {
+        else if (EQUATION.getSign().equals(buttonSymbol)) {
             if (counter) {
                 secondVariable = getVariableFromTextField();
                 ButtonsListener.equation(textNum, equationSymbol, firstVariable, secondVariable);
@@ -50,22 +45,22 @@ public class ButtonsListener implements ActionListener {
             }
         }
 //        блок для цифровых кнопок
-        else if (buttonSymbol == 'N') {
-            Button b = (Button) e.getSource();
+        else if (buttonSymbol.equals("N")) {
+            MyButton button = (MyButton) event.getSource();
             if (textNum.getText().equals("0")) {
-                textNum.setText(b.toString());
+                textNum.setText(Integer.toString(button.getValue()));
             } else {
                 if (counter && valCount) {
                     textNum.setText("");
-                    textNum.setText(textNum.getText() + b.toString());
+                    textNum.setText(textNum.getText() + button.getIndicator());
                     valCount = false;
                 }
                 if ((!counter) && (!valCount)) {
                     textNum.setText("");
-                    textNum.setText(textNum.getText() + b.toString());
+                    textNum.setText(textNum.getText() + button.getIndicator());
                     valCount = false;
                 } else {
-                    textNum.setText(textNum.getText() + b.toString());
+                    textNum.setText(textNum.getText() + button.getIndicator());
                 }
             }
         }
@@ -75,14 +70,14 @@ public class ButtonsListener implements ActionListener {
         return Double.parseDouble(textNum.getText());
     }
 
-    private static void equation(JTextField textField, char equationSymbol, double firstValue, double secondValue) {
-        if (equationSymbol == PLUS) {
+    private static void equation(JTextField textField, String symbol, double firstValue, double secondValue) {
+        if (PLUS.getSign().equals(symbol)) {
             setResult(textField, firstValue + secondValue);
-        } else if (equationSymbol == MINUS) {
+        } else if (MINUS.getSign().equals(symbol)) {
             setResult(textField, firstValue - secondValue);
-        } else if (equationSymbol == MULTIPLICATION) {
+        } else if (MULTIPLICATION.getSign().equals(symbol)) {
             setResult(textField, firstValue * secondValue);
-        } else if (equationSymbol == DIVISION) {
+        } else if (DIVISION.getSign().equals(symbol)) {
             setResult(textField, firstValue / secondValue);
         }
     }
@@ -90,6 +85,4 @@ public class ButtonsListener implements ActionListener {
     private static void setResult(JTextField textField, double equation) {
         textField.setText(Double.toString(equation));
     }
-
-
 }

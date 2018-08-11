@@ -1,21 +1,23 @@
 package com.wte.simple_calc;
 
+import com.wte.simple_calc.MyButton;
+import com.wte.simple_calc.ButtonsListener;
+import com.wte.simple_calc.Calculator;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static com.wte.simple_calc.Signs.*;
+
 
 public class CalcGui extends JFrame {
-    private static final String PLUS = "+";
-    private static final String MINUS = "-";
-    private static final String MULTIPLICATION = "*";
-    private static final String DIVISION = "/";
 
     public CalcGui() {
         ButtonsListener buttonsListener = new ButtonsListener();
-        ArrayList<Button> numericButtons = new ArrayList<>();
+        ArrayList<MyButton> numericButtons = new ArrayList<>();
         Font f = new Font("Serif", Font.BOLD, 20);
-        UIManager.put("Button.font", f);
+        UIManager.put("MyButton.font", f);
         UIManager.put("TextField.font", f);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -41,72 +43,71 @@ public class CalcGui extends JFrame {
 
         JTextField textField = new JTextField(20);
         Calculator.setTextField(textField);
-        textField.setText("0");
+        textField.setText("");
         textField.setHorizontalAlignment(JTextField.RIGHT);
         textPane.add(textField);
         pack();
-
     }
 
-    private void addOpButton(Container c, ButtonsListener a) {
+    private void addOpButton(Container container, ButtonsListener buttonsListener) {
 
-        Button plusButton = new Button(PLUS);
-        plusButton.setInd(PLUS);
+        MyButton plusButton = new MyButton(PLUS.getSign());
+        plusButton.setIndicator(PLUS.getSign());
+        plusButton.setValue(0);
         plusButton.setSize(new Dimension(15, 15));
 
-        Button minusButton = new Button(MINUS);
-        minusButton.setInd(MINUS);
+        MyButton minusButton = new MyButton(MINUS.getSign());
+        minusButton.setIndicator(MINUS.getSign());
+        minusButton.setValue(0);
         minusButton.setSize(new Dimension(15, 15));
 
-        Button multiplyButton = new Button("*");
-        multiplyButton.setInd(MULTIPLICATION);
+        MyButton multiplyButton = new MyButton(MULTIPLICATION.getSign());
+        multiplyButton.setIndicator(MULTIPLICATION.getSign());
+        multiplyButton.setValue(0);
         multiplyButton.setSize(new Dimension(15, 15));
 
-        Button divisionButton = new Button("/");
-        divisionButton.setInd(DIVISION);
+        MyButton divisionButton = new MyButton(DIVISION.getSign());
+        divisionButton.setIndicator(DIVISION.getSign());
+        divisionButton.setValue(0);
         divisionButton.setSize(new Dimension(15, 15));
 
-        Button button = new Button("=");
-        button.setInd('=');
-        button.setSize(new Dimension(15, 15));
+        MyButton equationButton = new MyButton(EQUATION.getSign());
+        equationButton.setIndicator(EQUATION.getSign());
+        equationButton.setValue(0);
+        equationButton.setSize(new Dimension(15, 15));
 
+        plusButton.addActionListener(buttonsListener);
+        minusButton.addActionListener(buttonsListener);
+        multiplyButton.addActionListener(buttonsListener);
+        divisionButton.addActionListener(buttonsListener);
+        equationButton.addActionListener(buttonsListener);
 
-        plusButton.addActionListener(a);
-        minusButton.addActionListener(a);
-        multiplyButton.addActionListener(a);
-        divisionButton.addActionListener(a);
-        button.addActionListener(a);
-
-
-        c.add(plusButton);
-        c.add(minusButton);
-        c.add(multiplyButton);
-        c.add(divisionButton);
-        c.add(button);
-
+        container.add(plusButton);
+        container.add(minusButton);
+        container.add(multiplyButton);
+        container.add(divisionButton);
+        container.add(equationButton);
     }
 
+    private void addNumButtons(Container c, ArrayList<MyButton> buttons, ButtonsListener listener) {
 
-    private void addNumButtons(Container c, ArrayList a, ButtonsListener al) {
-
-        ArrayList<Button> list = a;
         int count;
 
-        for (int i = 0; i <10 ; i++) {
-            list.add(i, new Button(Integer.toString(i)));
-            list.get(i).setVal(i);
-            list.get(i).setInd('N');
-            list.get(i).setSize(new Dimension(15, 15));
-            list.get(i).addActionListener(al);
+        for (int i = 0; i < 10; i++) {
+            buttons.add(i, new MyButton(Integer.toString(i)));
+            buttons.get(i).setValue(i);
+            buttons.get(i).setIndicator("N");
+            buttons.get(i).setSize(new Dimension(15, 15));
+            buttons.get(i).addActionListener(listener);
         }
 
         for (int i = 3; i >= 1; i--) {
             for (int j = 2; j >= 0; j--) {
                 count = i * 3 - j;
-                c.add(list.get(count));
+                c.add(buttons.get(count));
             }
         }
-        c.add(list.get(0));
+        c.add(buttons.get(0));
     }
 
 
