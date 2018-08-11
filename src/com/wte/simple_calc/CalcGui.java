@@ -1,9 +1,5 @@
 package com.wte.simple_calc;
 
-import com.wte.simple_calc.MyButton;
-import com.wte.simple_calc.ButtonsListener;
-import com.wte.simple_calc.Calculator;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -38,8 +34,8 @@ public class CalcGui extends JFrame {
         buttonPane.add(numericButtonsPane);
         buttonPane.add(operationButtonsPane);
 
-        addOpButton(operationButtonsPane, buttonsListener);
-        addNumButtons(numericButtonsPane, numericButtons, buttonsListener);
+        addOperationalButtons(operationButtonsPane, buttonsListener);
+        addNumericButtons(numericButtonsPane, numericButtons, buttonsListener);
 
         JTextField textField = new JTextField(20);
         Calculator.setTextField(textField);
@@ -49,7 +45,7 @@ public class CalcGui extends JFrame {
         pack();
     }
 
-    private void addOpButton(Container container, ButtonsListener buttonsListener) {
+    private void addOperationalButtons(Container container, ButtonsListener buttonsListener) {
 
         MyButton plusButton = new MyButton(PLUS.getSign());
         plusButton.setIndicator(PLUS.getSign());
@@ -89,7 +85,7 @@ public class CalcGui extends JFrame {
         container.add(equationButton);
     }
 
-    private void addNumButtons(Container c, ArrayList<MyButton> buttons, ButtonsListener listener) {
+    private void addNumericButtons(Container c, ArrayList<MyButton> buttons, ButtonsListener listener) {
 
         int count;
 

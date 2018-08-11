@@ -11,8 +11,9 @@ class MyButton extends JButton {
         super(text);
     }
 
-    public void setIndicator(String ind) {
+    public MyButton setIndicator(String ind) {
         this.indicator = ind;
+        return this;
 
     }
 
@@ -20,9 +21,9 @@ class MyButton extends JButton {
         return indicator;
     }
 
-    public void setValue(int value) {
+    public MyButton setValue(int value) {
         this.value = value;
-
+        return this;
     }
 
     public int getValue() {

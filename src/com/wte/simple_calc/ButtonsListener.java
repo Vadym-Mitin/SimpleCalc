@@ -21,7 +21,6 @@ public class ButtonsListener implements ActionListener {
     public void actionPerformed(ActionEvent event) {
 
         String buttonSymbol = ((MyButton) event.getSource()).getIndicator();
-        
 
         if (PLUS.getSign().equals(buttonSymbol)) {
             calculate(PLUS.getSign());
@@ -47,6 +46,7 @@ public class ButtonsListener implements ActionListener {
 //        блок для цифровых кнопок
         else if (buttonSymbol.equals("N")) {
             MyButton button = (MyButton) event.getSource();
+
             if (textNum.getText().equals("0")) {
                 textNum.setText(Integer.toString(button.getValue()));
             } else {
