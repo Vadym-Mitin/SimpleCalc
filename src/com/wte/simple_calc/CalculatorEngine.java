@@ -106,9 +106,7 @@ public class CalculatorEngine {
 
 
     public static void memoryAction(Signs sign) {
-        repeatedResult = false;
         repeatedNumeric = false;
-
         switch (sign) {
             case MEMORY_CLEAR:
                 memory = 0;
@@ -141,7 +139,7 @@ public class CalculatorEngine {
         } else {
             display.setText("0");
         }
-        repeatedNumeric = false;
+        repeatedNumeric = true;
         repeatedResult = false;
     }
 
