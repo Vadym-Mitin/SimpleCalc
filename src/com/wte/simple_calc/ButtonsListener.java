@@ -10,7 +10,6 @@ public class ButtonsListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-
         Signs symbol = ((MyButton) event.getSource()).getSign();
 
         CalculatorEngine.setTextField(CalculatorGui.getDisplay());

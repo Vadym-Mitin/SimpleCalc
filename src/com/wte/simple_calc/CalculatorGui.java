@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import static com.wte.simple_calc.Signs.*;
 
-
 public class CalculatorGui extends JFrame {
     private static JTextField display;
 
@@ -25,17 +24,12 @@ public class CalculatorGui extends JFrame {
 
         JPanel textPane = new JPanel(new GridLayout(3, 1));
         JPanel buttonPane = new JPanel(new GridLayout(1, 2));
-        buttonPane.setFont(f);
         JPanel numericButtonsPane = new JPanel(new GridLayout(4, 3, 5, 5));
-        numericButtonsPane.setFont(f);
         JPanel operationButtonsPane = new JPanel(new GridLayout(5, 1, 5, 5));
-        operationButtonsPane.setFont(f);
 
         JPanel memoryPane = new JPanel(new GridLayout(1, 4));
         JPanel actionPane = new JPanel(new GridLayout(1, 3));
 
-        // Добавляю панели текстовую и для кнопок (для кнопок будет
-        // 2 панели одна для чисел в грид и одна для операторов в боксе
         pane.add(textPane);
         pane.add(buttonPane);
 
@@ -63,7 +57,6 @@ public class CalculatorGui extends JFrame {
 
     private void addButtonToContainer(Container container, ButtonsListener buttonsListener, Signs sign) {
         MyButton button = new MyButton(sign);
-        button.setIndicator(sign.getSign());
         button.setValue(0);
         button.setSize(new Dimension(15, 15));
         button.addActionListener(buttonsListener);
@@ -78,37 +71,24 @@ public class CalculatorGui extends JFrame {
 
     private void addMemoryButtons(Container container, ButtonsListener buttonsListener) {
         addButtonToContainer(container, buttonsListener, MEMORY_READ);
-
         addButtonToContainer(container, buttonsListener, MEMORY_CLEAR);
-
         addButtonToContainer(container, buttonsListener, MEMORY_PLUS);
-
         addButtonToContainer(container, buttonsListener, MEMORY_MINUS);
     }
 
     private void addOperationalButtons(Container container, ButtonsListener buttonsListener) {
-
         addButtonToContainer(container, buttonsListener, ADDITION);
-
         addButtonToContainer(container, buttonsListener, SUBTRACTION);
-
         addButtonToContainer(container, buttonsListener, MULTIPLICATION);
-
         addButtonToContainer(container, buttonsListener, DIVISION);
-
         addButtonToContainer(container, buttonsListener, RESULT);
-
-
     }
 
     private void addNumericButtons(Container c, ArrayList<MyButton> buttons, ButtonsListener listener) {
-
         int count;
-
 
         for (int i = 0; i < 10; i++) {
             buttons.add(i, new MyButton(NUMERIC, i));
-            buttons.get(i).setIndicator(NUMERIC.getSign());
             buttons.get(i).setSize(new Dimension(15, 15));
             buttons.get(i).addActionListener(listener);
         }
@@ -127,7 +107,6 @@ public class CalculatorGui extends JFrame {
         changeButton.addActionListener(listener);
         c.add(changeButton);
     }
-
 
     public static JTextField getDisplay() {
         return display;

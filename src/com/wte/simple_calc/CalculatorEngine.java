@@ -83,7 +83,6 @@ public class CalculatorEngine {
 
         if (text.equals("0")) {
             if (value == 0) {
-//                display.setText(Integer.toString(value));
                 repeatedResult = false;
                 repeatedNumeric = false;
             } else {
