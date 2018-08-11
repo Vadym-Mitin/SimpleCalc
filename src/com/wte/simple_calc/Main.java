@@ -2,7 +2,7 @@ package com.wte.simple_calc;
 
 import javax.swing.*;
 
-public class CalcMain {
+public class Main {
 
     public static void main(String[] args) {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -10,7 +10,7 @@ public class CalcMain {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new CalcGui().setVisible(true);
+                new CalculatorGui().setVisible(true);
 
             }
         });

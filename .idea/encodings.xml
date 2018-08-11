@@ -2,6 +2,6 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/com/wte/simple_calc/ButtonsListener.java" charset="windows-1251" />
-    <file url="file://$PROJECT_DIR$/src/com/wte/simple_calc/CalcGui.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/com/wte/simple_calc/CalculatorGui.java" charset="windows-1251" />
   </component>
 </project>

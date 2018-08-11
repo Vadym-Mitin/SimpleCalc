@@ -6,27 +6,40 @@ public
 class MyButton extends JButton {
     private int value;
     private String indicator;
+    private Signs sign;
 
     public MyButton(String text) {
         super(text);
     }
+    public MyButton(Signs sign) {
+        this(sign.getSign());
+        this.sign = sign;
 
-    public MyButton setIndicator(String ind) {
+    }
+    public MyButton(Signs sign, int value) {
+        this(Integer.toString(value));
+        this.sign = sign;
+        this.value = value;
+    }
+
+
+    public void setIndicator(String ind) {
         this.indicator = ind;
-        return this;
-
     }
 
     public String getIndicator() {
         return indicator;
     }
 
-    public MyButton setValue(int value) {
+    public void setValue(int value) {
         this.value = value;
-        return this;
     }
 
     public int getValue() {
         return value;
+    }
+
+    public Signs getSign() {
+        return sign;
     }
 }
