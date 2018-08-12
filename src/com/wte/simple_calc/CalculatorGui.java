@@ -11,7 +11,6 @@ public class CalculatorGui extends JFrame {
 
     public CalculatorGui() {
         ButtonsListener buttonsListener = new ButtonsListener();
-        ArrayList<MyButton> numericButtons = new ArrayList<>();
         Font f = new Font("Serif", Font.BOLD, 30);
         UIManager.put("MyButton.font", f);
         UIManager.put("TextField.font", f);
@@ -22,22 +21,15 @@ public class CalculatorGui extends JFrame {
         add(pane);
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
 
-        JPanel textPane = new JPanel(new GridLayout(3, 1));
-        JPanel buttonPane = new JPanel(new GridLayout(1, 2));
-        JPanel numericButtonsPane = new JPanel(new GridLayout(4, 3, 5, 5));
-        JPanel operationButtonsPane = new JPanel(new GridLayout(5, 1, 5, 5));
-
-        JPanel memoryPane = new JPanel(new GridLayout(1, 4));
-        JPanel actionPane = new JPanel(new GridLayout(1, 3));
+        JPanel textPane = new JPanel(new GridLayout(1, 1));
+        JPanel buttonPane = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.HORIZONTAL;
 
         pane.add(textPane);
         pane.add(buttonPane);
 
-        buttonPane.add(numericButtonsPane);
-        buttonPane.add(operationButtonsPane);
-
-        addOperationalButtons(operationButtonsPane, buttonsListener);
-        addNumericButtons(numericButtonsPane, numericButtons, buttonsListener);
+        addAllButtons(buttonPane, constraints, buttonsListener);
 
         JTextField textField = new JTextField(20);
         display = textField;
@@ -46,66 +38,146 @@ public class CalculatorGui extends JFrame {
         textField.setFont(f);
         textPane.add(textField);
 
-        textPane.add(memoryPane);
-        addMemoryButtons(memoryPane, buttonsListener);
-
-        textPane.add(actionPane);
-        addActionButtons(actionPane, buttonsListener);
-
         pack();
     }
 
-    private void addButtonToContainer(Container container, ButtonsListener buttonsListener, Signs sign) {
+    private void addButtonToContainer(Container container, GridBagConstraints c, ButtonsListener buttonsListener, Signs sign) {
         MyButton button = new MyButton(sign);
         button.setValue(0);
         button.setSize(new Dimension(15, 15));
         button.addActionListener(buttonsListener);
-        container.add(button);
+        container.add(button, c);
     }
 
-    private void addActionButtons(Container container, ButtonsListener buttonsListener) {
-        addButtonToContainer(container, buttonsListener, CLEAR_ENTRY);
-        addButtonToContainer(container, buttonsListener, CLEAR_ALL);
-        addButtonToContainer(container, buttonsListener, REMOVE);
+    private void addButtonToContainer(Container container, GridBagConstraints c, ButtonsListener buttonsListener, Signs sign, int value) {
+        MyButton button = new MyButton(sign, value);
+        button.setValue(value);
+        button.setSize(new Dimension(15, 15));
+        button.addActionListener(buttonsListener);
+        container.add(button, c);
     }
 
-    private void addMemoryButtons(Container container, ButtonsListener buttonsListener) {
-        addButtonToContainer(container, buttonsListener, MEMORY_READ);
-        addButtonToContainer(container, buttonsListener, MEMORY_CLEAR);
-        addButtonToContainer(container, buttonsListener, MEMORY_PLUS);
-        addButtonToContainer(container, buttonsListener, MEMORY_MINUS);
-    }
 
-    private void addOperationalButtons(Container container, ButtonsListener buttonsListener) {
-        addButtonToContainer(container, buttonsListener, ADDITION);
-        addButtonToContainer(container, buttonsListener, SUBTRACTION);
-        addButtonToContainer(container, buttonsListener, MULTIPLICATION);
-        addButtonToContainer(container, buttonsListener, DIVISION);
-        addButtonToContainer(container, buttonsListener, RESULT);
-    }
-
-    private void addNumericButtons(Container c, ArrayList<MyButton> buttons, ButtonsListener listener) {
-        int count;
-
-        for (int i = 0; i < 10; i++) {
-            buttons.add(i, new MyButton(NUMERIC, i));
-            buttons.get(i).setSize(new Dimension(15, 15));
-            buttons.get(i).addActionListener(listener);
-        }
-
-        for (int i = 3; i >= 1; i--) {
-            for (int j = 2; j >= 0; j--) {
-                count = i * 3 - j;
-                c.add(buttons.get(count));
-            }
-        }
-        c.add(buttons.get(0));
-        MyButton pointButton = new MyButton(DECIMAL_POINT);
-        pointButton.addActionListener(listener);
-        c.add(pointButton);
-        MyButton changeButton = new MyButton(CHANGE_SIGN);
-        changeButton.addActionListener(listener);
-        c.add(changeButton);
+    private void addAllButtons(Container container, GridBagConstraints c, ButtonsListener buttonsListener) {
+// add row n1
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+        addButtonToContainer(container, c, buttonsListener, MEMORY_CLEAR);
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 0;
+        addButtonToContainer(container, c, buttonsListener, MEMORY_READ);
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 0;
+        addButtonToContainer(container, c, buttonsListener, MEMORY_PLUS);
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 0;
+        addButtonToContainer(container, c, buttonsListener, MEMORY_MINUS);
+// add row n2
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 1;
+        addButtonToContainer(container, c, buttonsListener, PERCENT);
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 1;
+        addButtonToContainer(container, c, buttonsListener, SQRT);
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 1;
+        addButtonToContainer(container, c, buttonsListener, MOD_TWO);
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 1;
+        addButtonToContainer(container, c, buttonsListener, MOD_ONE);
+// add row n3
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 2;
+        addButtonToContainer(container, c, buttonsListener, CLEAR_ENTRY);
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 2;
+        addButtonToContainer(container, c, buttonsListener, CLEAR_ALL);
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 2;
+        addButtonToContainer(container, c, buttonsListener, REMOVE);
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 2;
+        addButtonToContainer(container, c, buttonsListener, DIVISION);
+// add row n4
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 3;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 7);
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 3;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 8);
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 3;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 9);
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 3;
+        addButtonToContainer(container, c, buttonsListener, MULTIPLICATION);
+// add row n5
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 4;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 4);
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 4;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 5);
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 4;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 6);
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 4;
+        addButtonToContainer(container, c, buttonsListener, SUBTRACTION);
+// add row n6
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 5;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 1);
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 5;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 2);
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 5;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 3);
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 5;
+        addButtonToContainer(container, c, buttonsListener, ADDITION);
+// add row n7
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 6;
+        addButtonToContainer(container, c, buttonsListener, CHANGE_SIGN);
+        c.weightx = 0.5;
+        c.gridx = 1;
+        c.gridy = 6;
+        addButtonToContainer(container, c, buttonsListener, NUMERIC, 0);
+        c.weightx = 0.5;
+        c.gridx = 2;
+        c.gridy = 6;
+        addButtonToContainer(container, c, buttonsListener, DECIMAL_POINT);
+        c.weightx = 0.5;
+        c.gridx = 3;
+        c.gridy = 6;
+        addButtonToContainer(container, c, buttonsListener, RESULT);
     }
 
     public static JTextField getDisplay() {

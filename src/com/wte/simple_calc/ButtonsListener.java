@@ -27,11 +27,17 @@ public class ButtonsListener implements ActionListener {
             case MULTIPLICATION:
                 arithmeticalAction(MULTIPLICATION);
                 break;
-            case SQUARE:
-                arithmeticalAction(SQUARE);
+            case SQRT:
+                sqrtAction();
                 break;
             case PERCENT:
-                arithmeticalAction(PERCENT);
+                percentAction();
+                break;
+            case MOD_ONE:
+                modOneAction();
+                break;
+            case MOD_TWO:
+                modTwoAction();
                 break;
             case DECIMAL_POINT:
                 decimalPointAction();

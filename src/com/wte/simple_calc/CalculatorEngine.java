@@ -29,48 +29,96 @@ public class CalculatorEngine {
         display = textField;
     }
 
-    private static void setResultToDisplay(JTextField textField, double equation) {
-        textField.setText(Double.toString(equation));
+    private static void setResult(double equation) {
+        String str = Double.toString(equation);
+        str = str.replaceAll("()\\.0+$|(\\..+?)0+$", "$2");
+        display.setText(str);
     }
 
-    private static double getVariableFromDisplay() {
+    private static void setResult(int equation) {
+        display.setText(Integer.toString(equation));
+    }
+
+    private static void setResult(String equation) {
+        String str = equation;
+        str = str.replaceAll("()\\.0+$|(\\..+?)0+$", "$2");
+        display.setText(str);
+    }
+
+    private static String getStringVariable() {
+        return display.getText();
+    }
+
+    private static double getDoubleVariable() {
         return Double.parseDouble(display.getText());
     }
 
     public static void arithmeticalAction(Signs sign) {
         equationSign = sign;
-        firstValue = getVariableFromDisplay();
+        firstValue = getDoubleVariable();
         repeatedResult = false;
         repeatedNumeric = false;
     }
 
     public static void resultAction() {
         if (repeatedResult) {
-            firstValue = getVariableFromDisplay();
+            firstValue = getDoubleVariable();
             calculation(equationSign);
             repeatedResult = true;
             repeatedNumeric = false;
         } else {
-            secondValue = getVariableFromDisplay();
+            secondValue = getDoubleVariable();
             calculation(equationSign);
             repeatedResult = true;
             repeatedNumeric = false;
         }
     }
 
+    public static void percentAction() {
+        repeatedResult = false;
+        repeatedNumeric = false;
+        double value = getDoubleVariable();
+        double percent = (firstValue / 100) * value;
+        setResult(percent);
+    }
+
+    public static void sqrtAction() {
+        repeatedResult = false;
+        repeatedNumeric = false;
+        double value = getDoubleVariable();
+        double sqrt = Math.sqrt(value);
+        setResult(sqrt);
+    }
+
+    public static void modOneAction() {
+        double value = getDoubleVariable();
+        double modOne = Math.pow(value, (-1));
+        repeatedResult = false;
+        repeatedNumeric = false;
+        setResult(modOne);
+    }
+
+    public static void modTwoAction() {
+        double value = getDoubleVariable();
+        double modTwo = Math.pow(value, (2));
+        repeatedResult = false;
+        repeatedNumeric = false;
+        setResult(modTwo);
+    }
+
     private static void calculation(Signs buttonSign) {
         switch (buttonSign) {
             case ADDITION:
-                setResultToDisplay(display, firstValue + secondValue);
+                setResult(firstValue + secondValue);
                 break;
             case SUBTRACTION:
-                setResultToDisplay(display, firstValue - secondValue);
+                setResult(firstValue - secondValue);
                 break;
             case MULTIPLICATION:
-                setResultToDisplay(display, firstValue * secondValue);
+                setResult(firstValue * secondValue);
                 break;
             case DIVISION:
-                setResultToDisplay(display, firstValue / secondValue);
+                setResult(firstValue / secondValue);
                 break;
         }
     }
@@ -79,24 +127,24 @@ public class CalculatorEngine {
         MyButton button = (MyButton) event.getSource();
         int value = button.getValue();
         String stringValue = Integer.toString(value);
-        String text = display.getText();
+        String text = getStringVariable();
 
         if (text.equals("0")) {
             if (value == 0) {
                 repeatedResult = false;
                 repeatedNumeric = false;
             } else {
-                display.setText(Integer.toString(value));
+                setResult(value);
                 repeatedResult = false;
                 repeatedNumeric = true;
             }
         } else {
             if (repeatedNumeric) {
-                display.setText(text + stringValue);
+                setResult(text + stringValue);
                 repeatedResult = false;
                 repeatedNumeric = true;
             } else {
-                display.setText(stringValue);
+                setResult(stringValue);
                 repeatedResult = false;
                 repeatedNumeric = true;
             }
@@ -111,39 +159,40 @@ public class CalculatorEngine {
                 memory = 0;
                 break;
             case MEMORY_READ:
-                display.setText(Double.toString(memory));
+                setResult(memory);
                 break;
             case MEMORY_PLUS:
-                memory += getVariableFromDisplay();
+                memory += getDoubleVariable();
                 break;
             case MEMORY_MINUS:
-                memory -= getVariableFromDisplay();
+                memory -= getDoubleVariable();
                 break;
         }
     }
 
     public static void decimalPointAction() {
-        String text = display.getText();
-        if (!text.contains(".")) {
-            display.setText(text + ".");
-        }
+        String text = getStringVariable();
         repeatedResult = false;
         repeatedNumeric = true;
+        if (!text.contains(".")) {
+            setResult(text + ".");
+        }
     }
 
     public static void removeAction() {
-        String text = display.getText();
-        if (!text.equals("0") && text.length() > 1) {
-            display.setText(text.substring(0, text.length() - 1));
-        } else {
-            display.setText("0");
+        String text = getStringVariable();
+        if (!repeatedResult) {
+            if (!text.equals("0") && text.length() > 1) {
+                setResult(text.substring(0, text.length() - 1));
+            } else {
+                setResult("0");
+            }
         }
         repeatedNumeric = true;
-        repeatedResult = false;
     }
 
     public static void clearAllAction() {
-        display.setText("0");
+        setResult("0");
         firstValue = 0;
         secondValue = 0;
         equationSign = EMPTY;
@@ -152,18 +201,18 @@ public class CalculatorEngine {
     }
 
     public static void clearEntryAction() {
-        display.setText("0");
+        setResult("0");
         repeatedNumeric = false;
-        repeatedResult = false;
+//        repeatedResult = false;
     }
 
     public static void changeSignAction() {
-        String value = display.getText();
+        String value = getStringVariable();
         if (!value.equals("0")) {
             if (value.charAt(0) == '-') {
-                display.setText(value.substring(1));
+                setResult(value.substring(1));
             } else {
-                display.setText("-" + value);
+                setResult("-" + value);
             }
         }
     }
