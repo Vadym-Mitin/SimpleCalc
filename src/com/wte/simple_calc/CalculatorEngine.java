@@ -90,20 +90,20 @@ public class CalculatorEngine {
         setResult(sqrt);
     }
 
-    public static void modOneAction() {
+    public static void powOneAction() {
         double value = getDoubleVariable();
-        double modOne = Math.pow(value, (-1));
+        double powOne = Math.pow(value, (-1));
         repeatedResult = false;
         repeatedNumeric = false;
-        setResult(modOne);
+        setResult(powOne);
     }
 
-    public static void modTwoAction() {
+    public static void powTwoAction() {
         double value = getDoubleVariable();
-        double modTwo = Math.pow(value, (2));
+        double powTwo = Math.pow(value, (2));
         repeatedResult = false;
         repeatedNumeric = false;
-        setResult(modTwo);
+        setResult(powTwo);
     }
 
     private static void calculation(Signs buttonSign) {

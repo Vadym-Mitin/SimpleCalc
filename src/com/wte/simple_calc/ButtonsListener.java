@@ -33,13 +33,13 @@ public class ButtonsListener implements ActionListener {
             case PERCENT:
                 percentAction();
                 break;
-            case MOD_ONE:
-                modOneAction();
+            case POW_ONE:
+                powOneAction();
                 break;
-            case MOD_TWO:
-                modTwoAction();
+            case POW_TWO:
+                powTwoAction();
                 break;
-            case DECIMAL_POINT:
+            case DOT_ADD:
                 decimalPointAction();
                 break;
             case CHANGE_SIGN:

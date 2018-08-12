@@ -2,7 +2,6 @@ package com.wte.simple_calc;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 import static com.wte.simple_calc.Signs.*;
 
@@ -88,11 +87,11 @@ public class CalculatorGui extends JFrame {
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 1;
-        addButtonToContainer(container, c, buttonsListener, MOD_TWO);
+        addButtonToContainer(container, c, buttonsListener, POW_TWO);
         c.weightx = 0.5;
         c.gridx = 3;
         c.gridy = 1;
-        addButtonToContainer(container, c, buttonsListener, MOD_ONE);
+        addButtonToContainer(container, c, buttonsListener, POW_ONE);
 // add row n3
         c.weightx = 0.5;
         c.gridx = 0;
@@ -173,7 +172,7 @@ public class CalculatorGui extends JFrame {
         c.weightx = 0.5;
         c.gridx = 2;
         c.gridy = 6;
-        addButtonToContainer(container, c, buttonsListener, DECIMAL_POINT);
+        addButtonToContainer(container, c, buttonsListener, DOT_ADD);
         c.weightx = 0.5;
         c.gridx = 3;
         c.gridy = 6;
