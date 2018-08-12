@@ -187,8 +187,8 @@ public class CalculatorEngine {
             } else {
                 setResult("0");
             }
-        }
-        repeatedNumeric = true;
+            repeatedNumeric = true;
+        } else repeatedNumeric = false;
     }
 
     public static void clearAllAction() {
